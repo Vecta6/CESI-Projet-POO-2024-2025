@@ -16,7 +16,7 @@ const int gridHeight = 200;
 Grille grille(gridWidth, gridHeight, cellSize);
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(gridWidth * cellSize, gridHeight * cellSize), "Game of Life");
+    sf::RenderWindow window(sf::VideoMode(gridWidth * cellSize, gridHeight * cellSize), "Jeu de la vie");
     
     // initializeGrid();
     grille.initialiserGrille();
