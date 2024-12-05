@@ -1,4 +1,4 @@
-#include "grille.h"
+#include "grille.hpp"
 
 Grille::Grille(int largeur, int hauteur, int tailleCellule)
     : largeur(largeur), hauteur(hauteur), tailleCellule(tailleCellule) {

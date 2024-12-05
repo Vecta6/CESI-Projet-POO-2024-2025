@@ -1,4 +1,4 @@
-#include "interface.h"
+#include "interface.hpp"
 
 
 Button::Button(const sf::Vector2f& position, const sf::Vector2f& size, const std::string& text, const sf::Font& font) {

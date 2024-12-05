@@ -2,7 +2,6 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
-#include <typeinfo>
 
 #include <iostream>
 using namespace std;

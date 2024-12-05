@@ -2,7 +2,7 @@
 #define GRILLE_H
 
 #include <vector>
-#include "cellule.h"
+#include "cellule.hpp"
 #include <SFML/Graphics.hpp>
 
 class Grille {

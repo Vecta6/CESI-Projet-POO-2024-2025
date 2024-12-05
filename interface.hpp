@@ -6,7 +6,7 @@
 #include <mutex>
 #include <thread>
 #include <iostream>
-#include "grille.h"
+#include "grille.hpp"
 
 // classe  bouton
 class Button : public sf::Drawable {
