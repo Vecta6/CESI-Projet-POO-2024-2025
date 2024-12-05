@@ -51,12 +51,6 @@ int main(int argc, char *argv[], char *envp[]) {
         }
     }
 
-    
-
-    cout << fichier << endl;
-
-
-
     int reponse=prompt();
 
     Grille grille(gridWidth, gridHeight, cellSize);
@@ -64,9 +58,16 @@ int main(int argc, char *argv[], char *envp[]) {
     if(reponse==1)
     {
 
-        cout << "Pas encore disponible" << endl;
 
-        grille.initialiserGrille();
+        grille.initialiserGrille(fichier);
+        
+
+        bool isRunning=true;
+        while (isRunning)
+        {
+            
+        }
+        
 
     }else if(reponse==2){
 

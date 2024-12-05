@@ -10,7 +10,7 @@ Grille::Grille(int largeur, int hauteur, int tailleCellule)
     cellules.resize(hauteur, std::vector<Cellule>(largeur));
 }
 
-void Grille::initialiserGrille(string file) {
+int Grille::initialiserGrille(string file) {
 
 
     if(file!="")
@@ -18,6 +18,7 @@ void Grille::initialiserGrille(string file) {
         ifstream Fichier(file);
         if(!Fichier){
             cerr << "Impossible d'ouvrir le fichier" << endl;
+            return 1;
         }
 
     } else {
@@ -27,26 +28,12 @@ void Grille::initialiserGrille(string file) {
             }
         }
     }
+
+    return 0;
 }
 
-void Grille::afficher(sf::RenderWindow& window) {
-
-    for (int i = 0; i < hauteur; i++) {
-        for (int j = 0; j < largeur; j++) {
-            sf::RectangleShape rect(sf::Vector2f(tailleCellule, tailleCellule));
-            rect.setPosition(j * tailleCellule, i * tailleCellule);
-
-            if (cellules[i][j].isVivante()) {
-                rect.setFillColor(sf::Color::White);
-            } else {
-                rect.setFillColor(sf::Color::Black);
-            }
-
-            window.draw(rect);
-        }
-    }
-
-    // window.display();
+vector<vector<Cellule>> Grille::GetGrille() {
+    return cellules;
 }
 
 int Grille::compterVoisinsVivants(int x, int y) {

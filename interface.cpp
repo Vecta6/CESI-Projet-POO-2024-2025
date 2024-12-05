@@ -7,8 +7,6 @@ Button::Button(const sf::Vector2f& position, const sf::Vector2f& size, const std
     m_button.setPosition(position);
     m_button.setFillColor(sf::Color::White);
 
-
-
     m_text.setString(text);
     m_text.setFont(font);
     m_text.setCharacterSize(20);
@@ -47,6 +45,25 @@ InterfaceGraphique::InterfaceGraphique(Grille grille)
 }
 
 void InterfaceGraphique::executer() {
+    
+    
+    
+    ui_grille.resize(main_grille.GetHauteur(), std::vector<sf::RectangleShape>(main_grille.GetLargeur()));
+
+    for (int i = 0; i < main_grille.GetHauteur(); i++) {
+        for (int j = 0; j < main_grille.GetLargeur(); j++) {
+            sf::RectangleShape rect(sf::Vector2f(main_grille.GetTailleCellule(), main_grille.GetTailleCellule()));
+            rect.setPosition(j * main_grille.GetTailleCellule(), i * main_grille.GetTailleCellule());
+            rect.setFillColor(sf::Color::Black);
+            ui_grille[i][j]=rect;
+
+            window.draw(rect);
+        }
+    }
+
+
+
+
     // Lancer le thread pour la simulation
     std::thread simulationThread([&]() {
         while (window.isOpen()) {
@@ -55,6 +72,20 @@ void InterfaceGraphique::executer() {
                 {
                     std::lock_guard<std::mutex> lock(gridMutex);
                     main_grille.mettreAJour(); // Mettre à jour la grille
+                    
+                    for (int i = 0; i < main_grille.GetHauteur(); i++) {
+                        for (int j = 0; j < main_grille.GetLargeur(); j++) {
+
+                            if (main_grille.GetGrille()[i][j].isVivante()) {
+                                ui_grille[i][j].setFillColor(sf::Color::White);
+                            } else {
+                                ui_grille[i][j].setFillColor(sf::Color::Black);
+                            }
+
+                            window.draw(ui_grille[i][j]);
+                        }
+                    }
+
                 }
                 // Pause pour simuler la vitesse
                 std::this_thread::sleep_for(std::chrono::duration<float>(vitesse));
@@ -72,12 +103,14 @@ void InterfaceGraphique::executer() {
         }
 
         // Affichage de la grille
-        window.clear();
-        main_grille.afficher(window);
-        window.display();
+
+        
 
         gererEvenements();  // Gérer les événements utilisateur
+
         dessiner();          // Dessiner la grille et les boutons
+
+        
     }
 
     // Attendre la fin du thread avant de quitter
@@ -89,7 +122,9 @@ void InterfaceGraphique::executer() {
 
 void InterfaceGraphique::gererEvenements() {
     sf::Event event;
+    cout << window.pollEvent(event) << endl;
     while (window.pollEvent(event)) {
+        
         if (event.type == sf::Event::Closed) {
             window.close();
         }
@@ -124,13 +159,16 @@ void InterfaceGraphique::gererEvenements() {
 void InterfaceGraphique::dessiner() {
     {
         std::lock_guard<std::mutex> lock(gridMutex);
-        main_grille.afficher(window);
     }
+
+
+
     window.draw(playPauseButton);
     window.draw(resetButton);
     window.draw(quitButton);
     window.draw(slider);
     window.draw(cursor);
+
     window.display();
 }
 
