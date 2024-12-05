@@ -1,4 +1,4 @@
-#include "cellule.h"
+#include "cellule.hpp"
 
 Cellule::Cellule() : vivante(false) {}
 

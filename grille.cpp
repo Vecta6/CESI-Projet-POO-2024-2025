@@ -1,12 +1,23 @@
 #include "grille.hpp"
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
 
 Grille::Grille(int largeur, int hauteur, int tailleCellule)
     : largeur(largeur), hauteur(hauteur), tailleCellule(tailleCellule) {
     cellules.resize(hauteur, std::vector<Cellule>(largeur));
 }
 
-void Grille::initialiserGrille() {
+void Grille::initialiserGrille(ifstream file) {
 
+
+    if(file)
+    {
+        cout << "TESTE" << endl;
+        return ;
+    }
     for (int i = 0; i < hauteur; i++) {
         for (int j = 0; j < largeur; j++) {
             cellules[i][j].setVivante(rand() % 2);
@@ -53,7 +64,7 @@ int Grille::compterVoisinsVivants(int x, int y) {
 }
 
 void Grille::mettreAJour() {
-    std::vector<std::vector<Cellule>> nouvelleGrille = cellules;
+    vector<vector<Cellule>> nouvelleGrille = cellules;
 
     for (int i = 0; i < hauteur; i++) {
         for (int j = 0; j < largeur; j++) {
@@ -72,4 +83,22 @@ void Grille::mettreAJour() {
     }
 
     cellules = nouvelleGrille;
+}
+
+
+
+
+int Grille::GetLargeur()
+{
+    return largeur;
+}
+
+int Grille::GetHauteur()
+{
+    return hauteur;
+}
+
+int Grille::GetTailleCellule()
+{
+    return tailleCellule;
 }

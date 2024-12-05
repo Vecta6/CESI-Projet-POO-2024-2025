@@ -4,6 +4,8 @@
 #include <cstdlib>
 
 #include <iostream>
+#include <fstream>
+#include <string>
 using namespace std;
 
 #include "grille.hpp"
@@ -11,15 +13,14 @@ using namespace std;
 #include "interface.hpp"
 
 const int cellSize = 5;
-const int gridWidth = 200;
-const int gridHeight = 200;
+const int gridWidth = 150;
+const int gridHeight = 100;
 
 
 
 int prompt()
 {
     int reponse=0;
-    system("clear");
     cout << "Bienvenu dans le jeu de la vie\n" << endl;
     
     do {
@@ -37,62 +38,48 @@ int prompt()
 
 int main(int argc, char *argv[], char *envp[]) {
     
+    string fichier;
 
     if(argc>1)
     {
-        cout << "Les parametres ne sont pas encore pris en charge" << endl;
-        // for(int i=1; i<argc; i++)
-        // {
-        //     cout << argv[i] << endl ;
-        // }
+        for(int i=1; i<argc; i++)
+        {
+            if(string(argv[i])=="-f" && argv[i+1])
+            {
+                fichier=string(argv[i+1]);
+            }
+        }
     }
 
-
     
+
+    cout << fichier << endl;
 
 
 
     int reponse=prompt();
 
+    Grille grille(gridWidth, gridHeight, cellSize);
+
     if(reponse==1)
     {
+
         cout << "Pas encore disponible" << endl;
-        Grille grille(gridWidth, gridHeight, cellSize);
 
         grille.initialiserGrille();
 
-
-
-
     }else if(reponse==2){
-        // sf::RenderWindow window(sf::VideoMode(gridWidth * cellSize, gridHeight * cellSize), "Jeu de la vie");
-        // while (window.isOpen())
-        // {
-        //     sf::Event event;
-        //     while (window.pollEvent(event)) {
-        //         if (event.type == sf::Event::Closed)
-        //             window.close();
-        //     }
-
-
-        //     grille.afficher(window);
-
-        //     grille.mettreAJour();
-
-        //     sf::sleep(sf::milliseconds(10));
-        // }
 
         try {
-            InterfaceGraphique interface(gridWidth, gridHeight, cellSize);
+            InterfaceGraphique interface(grille);
             interface.executer();
         } catch (const std::exception& e) {
             std::cerr << "Erreur : " << e.what() << std::endl;
         }
+
     }
 
 
-    
-    
 
     return 0;
 }

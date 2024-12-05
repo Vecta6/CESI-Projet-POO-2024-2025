@@ -1,4 +1,5 @@
 #include "interface.hpp"
+#include <iostream>
 
 
 Button::Button(const sf::Vector2f& position, const sf::Vector2f& size, const std::string& text, const sf::Font& font) {
@@ -24,13 +25,14 @@ void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(m_text, states);
 }
 
-InterfaceGraphique::InterfaceGraphique(int largeur, int hauteur, int tailleCellule)
-    : window(sf::VideoMode(largeur * tailleCellule, hauteur * tailleCellule + 100), "Jeu de la Vie"),
-      grille(largeur, hauteur, tailleCellule),
-      playPauseButton({50.0f, static_cast<float>(hauteur * tailleCellule + 20)}, {150.0f, 40.0f}, "Play/Pause", font),
-      resetButton({250.0f, static_cast<float>(hauteur * tailleCellule + 20)}, {150.0f, 40.0f}, "Reset", font),
-      quitButton({450.0f, static_cast<float>(hauteur * tailleCellule + 20)}, {150.0f, 40.0f}, "Quit", font),
+InterfaceGraphique::InterfaceGraphique(Grille grille)
+    : window(sf::VideoMode(grille.GetLargeur() * grille.GetTailleCellule(), grille.GetHauteur() * grille.GetTailleCellule() + 100), "Jeu de la Vie"),
+      main_grille(grille),
+      playPauseButton({50.0f, static_cast<float>(grille.GetHauteur() * grille.GetTailleCellule() + 20)}, {150.0f, 40.0f}, "Play/Pause", font),
+      resetButton({250.0f, static_cast<float>(grille.GetHauteur() * grille.GetTailleCellule() + 20)}, {150.0f, 40.0f}, "Reset", font),
+      quitButton({450.0f, static_cast<float>(grille.GetHauteur() * grille.GetTailleCellule() + 20)}, {150.0f, 40.0f}, "Quit", font),
       isRunning(false), vitesse(0.5f), isDragging(false) {
+        std::cout << main_grille.GetHauteur() << std::endl;
 
     if (!font.loadFromFile("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf")) {
         throw std::runtime_error("Impossible de charger la police");
@@ -38,11 +40,11 @@ InterfaceGraphique::InterfaceGraphique(int largeur, int hauteur, int tailleCellu
 
     slider.setSize({400, 10});
     slider.setFillColor(sf::Color(200, 200, 200));
-    slider.setPosition(50, hauteur * tailleCellule + 70);
+    slider.setPosition(50, grille.GetHauteur() * grille.GetTailleCellule() + 70);
 
     cursor.setSize({10, 30});
     cursor.setFillColor(sf::Color::Red);
-    cursor.setPosition(250, hauteur * tailleCellule + 65);
+    cursor.setPosition(250, grille.GetHauteur() * grille.GetTailleCellule() + 65);
 }
 
 void InterfaceGraphique::executer() {
@@ -53,7 +55,7 @@ void InterfaceGraphique::executer() {
                 // Synchronisation pour protéger l'accès à la grille
                 {
                     std::lock_guard<std::mutex> lock(gridMutex);
-                    grille.mettreAJour(); // Mettre à jour la grille
+                    main_grille.mettreAJour(); // Mettre à jour la grille
                 }
                 // Pause pour simuler la vitesse
                 std::this_thread::sleep_for(std::chrono::duration<float>(vitesse));
@@ -72,7 +74,7 @@ void InterfaceGraphique::executer() {
 
         // Affichage de la grille
         window.clear();
-        grille.afficher(window);
+        main_grille.afficher(window);
         window.display();
         gererEvenements();  // Gérer les événements utilisateur
         dessiner();          // Dessiner la grille et les boutons
@@ -97,7 +99,7 @@ void InterfaceGraphique::gererEvenements() {
                 isRunning = !isRunning;
             } else if (resetButton.isMouseOver(window)) {
                 std::lock_guard<std::mutex> lock(gridMutex);
-                grille.initialiserGrille();
+                main_grille.initialiserGrille();
             } else if (quitButton.isMouseOver(window)) {
                 window.close();
             } else if (cursor.getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))) {
@@ -123,7 +125,7 @@ void InterfaceGraphique::dessiner() {
     window.clear();
     {
         std::lock_guard<std::mutex> lock(gridMutex);
-        grille.afficher(window);
+        main_grille.afficher(window);
     }
     window.draw(playPauseButton);
     window.draw(resetButton);

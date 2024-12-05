@@ -25,7 +25,7 @@ private:
 // classe interface graphique
 class InterfaceGraphique {
 public:
-    InterfaceGraphique(int largeur, int hauteur, int tailleCellule);
+    InterfaceGraphique(Grille grille);
     ~InterfaceGraphique();  // Destructeur pour gérer le thread
     void executer();
 
@@ -34,8 +34,8 @@ private:
     void dessiner();
 
     sf::RenderWindow window;
-    Grille grille;
     sf::Font font;
+    Grille main_grille;
     Button playPauseButton;
     Button resetButton;
     Button quitButton;
