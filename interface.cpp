@@ -32,7 +32,6 @@ InterfaceGraphique::InterfaceGraphique(Grille grille)
       resetButton({250.0f, static_cast<float>(grille.GetHauteur() * grille.GetTailleCellule() + 20)}, {150.0f, 40.0f}, "Reset", font),
       quitButton({450.0f, static_cast<float>(grille.GetHauteur() * grille.GetTailleCellule() + 20)}, {150.0f, 40.0f}, "Quit", font),
       isRunning(false), vitesse(0.5f), isDragging(false) {
-        std::cout << main_grille.GetHauteur() << std::endl;
 
     if (!font.loadFromFile("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf")) {
         throw std::runtime_error("Impossible de charger la police");
@@ -76,6 +75,7 @@ void InterfaceGraphique::executer() {
         window.clear();
         main_grille.afficher(window);
         window.display();
+
         gererEvenements();  // Gérer les événements utilisateur
         dessiner();          // Dessiner la grille et les boutons
     }
@@ -122,7 +122,6 @@ void InterfaceGraphique::gererEvenements() {
 }
 
 void InterfaceGraphique::dessiner() {
-    window.clear();
     {
         std::lock_guard<std::mutex> lock(gridMutex);
         main_grille.afficher(window);

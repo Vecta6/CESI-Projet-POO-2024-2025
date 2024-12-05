@@ -16,7 +16,7 @@ private:
 public:
     Grille(int largeur, int hauteur, int tailleCellule);
     
-    void initialiserGrille(ifstream file);
+    void initialiserGrille(string file="");
     void afficher(sf::RenderWindow& window);
     int compterVoisinsVivants(int x, int y);
     void mettreAJour();
