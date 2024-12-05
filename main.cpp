@@ -6,9 +6,9 @@
 #include <iostream>
 using namespace std;
 
-#include "grille.h"
-#include "cellule.h"
-#include "interface.h"
+#include "grille.hpp"
+#include "cellule.hpp"
+#include "interface.hpp"
 
 const int cellSize = 5;
 const int gridWidth = 200;
