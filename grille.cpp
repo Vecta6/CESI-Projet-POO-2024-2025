@@ -24,6 +24,7 @@ int Grille::initialiserGrille(const vector<vector<string>> table) {
                 if (table[y][x]=="2")
                 {
                     cellules[y][x].setObstacle(true);
+
                 } else if (table[y][x]=="1")
                 {
                     cellules[y][x].setVivante(true);
@@ -59,7 +60,7 @@ int Grille::compterVoisinsVivants(int x, int y) {
             int ni = (x + i + hauteur) % hauteur;
             int nj = (y + j + largeur) % largeur;
             
-            if (cellules[ni][nj].isVivante()) {
+            if (cellules[ni][nj].isVivante() && !cellules[ni][nj].isObstacle()) {
                 voisinsVivants++;
             }
         }

@@ -122,7 +122,7 @@ int main(int argc, char *argv[], char *envp[]) {
             {
                 for(int x=0; x<gridWidth; x++)
                 {
-                    if (Cellules[y][x].isObstacle())
+                    if (Cellules[y][x].isObstacle()==1)
                     {
                         cout << "◻ ";
                     }else if(Cellules[y][x].isVivante()==1) {
