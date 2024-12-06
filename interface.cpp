@@ -134,7 +134,7 @@ void InterfaceGraphique::gererEvenements() {
                 isRunning = !isRunning;
             } else if (resetButton.isMouseOver(window)) {
                 std::lock_guard<std::mutex> lock(gridMutex);
-                main_grille.initialiserGrille();
+                main_grille.initialiserGrille(initial);
             } else if (quitButton.isMouseOver(window)) {
                 window.close();
             } else if (cursor.getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))) {

@@ -1,6 +1,7 @@
 #include "grille.hpp"
 #include <iostream>
 #include <fstream>
+#include <optional>
 
 using namespace std;
 
@@ -10,18 +11,31 @@ Grille::Grille(int largeur, int hauteur, int tailleCellule)
     cellules.resize(hauteur, std::vector<Cellule>(largeur));
 }
 
-int Grille::initialiserGrille(string file) {
+int Grille::initialiserGrille(const vector<vector<string>> table) {
 
 
-    if(file!="")
+    if(!table.empty())
     {
-        ifstream Fichier(file);
-        if(!Fichier){
-            cerr << "Impossible d'ouvrir le fichier" << endl;
-            return 1;
+        
+        for(int y=0; y<hauteur; y++)
+        {
+            for(int x=0; x<largeur; x++)
+            {
+                if (table[y][x]=="2")
+                {
+                    cellules[y][x].setObstacle(true);
+                } else if (table[y][x]=="1")
+                {
+                    cellules[y][x].setVivante(true);
+                }else if(table[y][x]=="0"){
+                    cellules[y][x].setVivante(false);
+                }
+            }
         }
 
+
     } else {
+        srand(time(NULL));
         for (int i = 0; i < hauteur; i++) {
             for (int j = 0; j < largeur; j++) {
                 cellules[i][j].setVivante(rand() % 2);
@@ -58,6 +72,7 @@ void Grille::mettreAJour() {
 
     for (int i = 0; i < hauteur; i++) {
         for (int j = 0; j < largeur; j++) {
+            if(nouvelleGrille[i][j].isObstacle()){continue;}
             int voisinsVivants = compterVoisinsVivants(i, j);
 
             if (cellules[i][j].isVivante()) {

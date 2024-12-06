@@ -35,6 +35,7 @@ private:
 
     sf::RenderWindow window;
     sf::Font font;
+    vector<vector<string>> initial;
     Grille main_grille;
     vector<vector<sf::RectangleShape>> ui_grille;
     Button playPauseButton;

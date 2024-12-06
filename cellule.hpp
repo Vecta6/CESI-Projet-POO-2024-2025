@@ -2,13 +2,17 @@
 #define CELLULE_H
 
 class Cellule {
-public:
+private:
     bool vivante;
+    bool obstacle;
+public:
 
     Cellule();
     void toggle();
     void setVivante(bool v);
     bool isVivante() const;
+    void setObstacle(bool v);
+    bool isObstacle();
 };
 
 #endif

@@ -16,7 +16,7 @@ private:
 public:
     Grille(int largeur, int hauteur, int tailleCellule);
     
-    int initialiserGrille(string file="");
+    int initialiserGrille(vector<vector<string>> table);
     vector<vector<Cellule>> GetGrille();
     int compterVoisinsVivants(int x, int y);
     void mettreAJour();
