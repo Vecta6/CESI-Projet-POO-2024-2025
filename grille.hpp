@@ -4,7 +4,6 @@
 #include <vector>
 #include <fstream>
 #include "cellule.hpp"
-#include <SFML/Graphics.hpp>
 
 using namespace std;
 

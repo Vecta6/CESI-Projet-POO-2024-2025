@@ -28,8 +28,11 @@ int Grille::initialiserGrille(const vector<vector<string>> table) {
                 } else if (table[y][x]=="1")
                 {
                     cellules[y][x].setVivante(true);
-                }else if(table[y][x]=="0"){
+
+                }else if(table[y][x]=="0")
+                {
                     cellules[y][x].setVivante(false);
+
                 }
             }
         }

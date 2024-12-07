@@ -6,13 +6,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <unistd.h>
 #include <sstream>
+
+
 using namespace std;
 
 #include "grille.hpp"
 #include "cellule.hpp"
 #include "interface.hpp"
+#include "console.hpp"
 
 const int cellSize = 5;
 int gridWidth = 15;
@@ -36,11 +38,10 @@ int prompt()
     
 }
 
-
-
 int main(int argc, char *argv[], char *envp[]) {
     
     string fichier;
+    int itteration=0;
 
     if(argc>1)
     {
@@ -49,12 +50,11 @@ int main(int argc, char *argv[], char *envp[]) {
             if(string(argv[i])=="-f" && argv[i+1])
             {
                 fichier=string(argv[i+1]);
+            } else if (string(argv[i])=="-i" && argv[i+1]) {
+                itteration=stoi(argv[i+1]);
             }
         }
     }
-
-
-    int reponse=prompt();
 
     vector<vector<string>> table;
 
@@ -89,11 +89,8 @@ int main(int argc, char *argv[], char *envp[]) {
 
             while (stream >> mot)
             {
-                cout << mot;
                 mots.insert(mots.end(), mot);
             }
-
-            cout << endl;
             
             table.insert(table.end(), mots);
             
@@ -101,44 +98,24 @@ int main(int argc, char *argv[], char *envp[]) {
         file.close();
     }
 
+    int reponse=prompt();
+
 
     Grille grille(gridWidth, gridHeight, cellSize);
-
+    grille.initialiserGrille(table);
+    
     if(reponse==1)
     {
+        Console console(grille);
 
-
-        grille.initialiserGrille(table);
         
+        size_t pos = fichier.find_last_of("/\\");
+        fichier=fichier.substr(pos+1);
 
-        bool isRunning=true;
-        while (isRunning)
-        {
-            // Afficher la grille
-            vector<vector<Cellule>> Cellules=grille.GetGrille();
-            
-            cout << "----" << endl;
-            for(int y=0; y<gridHeight; y++)
-            {
-                for(int x=0; x<gridWidth; x++)
-                {
-                    if (Cellules[y][x].isObstacle()==1)
-                    {
-                        cout << "◻ ";
-                    }else if(Cellules[y][x].isVivante()==1) {
-                        cout << "■ ";
-                    }else  if(Cellules[y][x].isVivante()==0){
-                        cout << "⋅ ";
-                    }
-
-                }
-                cout << endl;
-            }
-
-            usleep(100 * 1000);
-            grille.mettreAJour();
-            
-        }
+    
+        
+        console.execute(fichier, itteration);
+        
         
 
     }else if(reponse==2){
