@@ -69,15 +69,19 @@ bool Console::VerifDiff()
 
 void Console::execute(string nom_fichier, int itteration=0)
 {
+
     is_running=true;
     bool verif=false;
     stat_grille=main_grille.GetGrille();
     
-    string dossier=nom_fichier + "_out";
-    stringstream command;
-    command << "mkdir " << nom_fichier << "_out";
+    // Creation du nom de dossier
+    stringstream dossier;
+    dossier << nom_fichier << "_out";
 
-    if(mkdir(command.str().c_str(), 0777)){}
+    // Creation du dossier
+    if(mkdir(dossier.str().c_str(), 0777)){}
+
+
 
     cout << "Etat initial" << endl;
     ShowStat();
@@ -86,8 +90,10 @@ void Console::execute(string nom_fichier, int itteration=0)
     while (is_running)
     {
 
+        // condition pour qui s'execute une fois sur deux
         if(verif)
-        {
+        {   
+            // si il y a un difference entre les 2 etats alors stopper la boucle
             if(VerifDiff())
             {
                 cout << "---\nPlus auccune évolution\n---" << endl;
@@ -103,14 +109,17 @@ void Console::execute(string nom_fichier, int itteration=0)
 
         
 
+        // Enregistrer la grille dans un fichier
         stringstream path;
-        path << dossier<< "/" << "Iterration_" << count;
+        path << dossier.str() << "/" << "Iterration_" << count;
         ofstream fichier(path.str().c_str());
+
+        // Verification de la bonne ouvertur du fichier
         if(fichier.is_open())
         {
             vector<vector<Cellule>> Cellules=main_grille.GetGrille();
             for(int y=0; y<main_grille.GetHauteur(); y++)
-    {
+            {           
                 for(int x=0; x<main_grille.GetLargeur(); x++)
                 {
                     if(Cellules[y][x].isObstacle()) {
@@ -125,11 +134,14 @@ void Console::execute(string nom_fichier, int itteration=0)
             }
         }
 
+
+        // si un nombre d'itteration a était entré alors faire en sorte que quand ça arrive au nombre d'itteration cible, arreter la boucle
         if(count==itteration) {
             cout << "Interuption" << endl;
             break;
         }
 
+        // mise a jour de la grille pour passer la 'iterration suivante
         main_grille.mettreAJour();
         count++;
     }
