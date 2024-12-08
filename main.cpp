@@ -16,7 +16,7 @@ using namespace std;
 #include "interface.hpp"
 #include "console.hpp"
 
-const int cellSize = 5;
+const int cellSize = 10;
 int gridWidth = 15;
 int gridHeight = 15;
 
@@ -43,6 +43,9 @@ int main(int argc, char *argv[], char *envp[]) {
     string fichier;
     int itteration=0;
 
+
+
+    // recuperer les different argument
     if(argc>1)
     {
         for(int i=1; i<argc; i++)
@@ -56,8 +59,13 @@ int main(int argc, char *argv[], char *envp[]) {
         }
     }
 
-    vector<vector<string>> table;
 
+
+
+
+
+    // Transformer le fichier selectionné en tableau
+    vector<vector<string>> table;
     if(fichier!="")
     {
         ifstream file(fichier);
@@ -98,12 +106,15 @@ int main(int argc, char *argv[], char *envp[]) {
         file.close();
     }
 
+
+    // Interoger l'utilisateur
     int reponse=prompt();
 
-
+    // Initialiser la grille
     Grille grille(gridWidth, gridHeight, cellSize);
     grille.initialiserGrille(table);
-    
+
+    // mode conole ou mode graphique
     if(reponse==1)
     {
         Console console(grille);

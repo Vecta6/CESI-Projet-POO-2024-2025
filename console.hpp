@@ -15,6 +15,7 @@ private:
     
 public:
     Console(Grille grille);
+    ~Console();
     void execute(string nom_fichier, int iterration);
 };
 

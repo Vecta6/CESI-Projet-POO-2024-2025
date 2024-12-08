@@ -150,3 +150,8 @@ void Console::execute(string nom_fichier, int itteration=0)
     ShowStat();
     
 }
+
+
+
+
+Console::~Console(){}
