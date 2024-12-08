@@ -17,8 +17,8 @@ using namespace std;
 #include "console.hpp"
 
 const int cellSize = 10;
-int gridWidth = 15;
-int gridHeight = 15;
+int gridWidth = 55;
+int gridHeight = 55;
 
 
 

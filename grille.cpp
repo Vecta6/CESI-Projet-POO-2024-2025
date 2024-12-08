@@ -46,6 +46,7 @@ int Grille::initialiserGrille(const vector<vector<string>> table) {
             }
         }
     }
+    initialstate = cellules;
 
     return 0;
 }
@@ -110,4 +111,8 @@ int Grille::GetHauteur()
 int Grille::GetTailleCellule()
 {
     return tailleCellule;
+}
+
+void Grille::reset() {
+    cellules = initialstate;
 }

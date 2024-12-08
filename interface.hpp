@@ -2,29 +2,33 @@
 #define INTERFACE_H
 
 #include <SFML/Graphics.hpp>
-#include <atomic>
-#include <mutex>
-#include <thread>
-#include <iostream>
+#include <unordered_map>
+#include <memory>
 #include "grille.hpp"
 #include "cellule.hpp"
 
+// Classe abstraite pour encapsuler les actions clavier
+class ActionClavier {
+public:
+    virtual void executer(Grille& grille, bool& enPause, int& vitesse, sf::RenderWindow& window) = 0;
+    virtual ~ActionClavier() = default;
+};
 
-// classe interface graphique
+// Classe principale InterfaceGraphique
 class InterfaceGraphique {
 public:
     InterfaceGraphique(Grille grille);
-    ~InterfaceGraphique();  // Destructeur pour gérer le thread
-    void executer();
+    ~InterfaceGraphique();  // Destructeur pour gérer les ressources
+    void executer();        // Boucle principale d'exécution
 
 private:
-    void gererEvenements();
-    void render();
+    void render();                                   // Méthode pour afficher la grille
 
-    sf::RenderWindow window;
-    sf::Font font;
-    vector<vector<string>> initial;
-    Grille main_grille;
+    sf::RenderWindow window;                        // Fenêtre SFML
+    sf::Font font;                                  // Police pour le texte (par exemple, pour afficher la vitesse)
+    Grille main_grille;                             // Grille principale
+    Grille saved_grille;
+    std::unordered_map<sf::Keyboard::Key, std::unique_ptr<ActionClavier>> actions; // Map des actions clavier
 };
 
 #endif

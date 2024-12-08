@@ -10,6 +10,7 @@ using namespace std;
 class Grille {
 private:
     vector<vector<Cellule>> cellules;
+    vector<vector<Cellule>> initialstate;
     int largeur, hauteur;
     int tailleCellule;
 public:
@@ -22,6 +23,7 @@ public:
     int GetLargeur();
     int GetHauteur();
     int GetTailleCellule();
+    void reset();
 };
 
 #endif
