@@ -16,12 +16,20 @@ int Grille::initialiserGrille(const vector<vector<string>> table) {
 
     if(!table.empty())
     {
+
+        int y_size=table.size()-1;
+
         
         for(int y=0; y<hauteur; y++)
         {
+            int x_size=table[y].size()-1;
+
             for(int x=0; x<largeur; x++)
             {
-                if (table[y][x]=="2")
+                if(y>y_size || x>x_size)
+                {
+                    cellules[y][x].setVivante(false);
+                }else if (table[y][x]=="2")
                 {
                     cellules[y][x].setObstacle(true);
 

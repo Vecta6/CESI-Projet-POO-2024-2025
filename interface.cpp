@@ -50,7 +50,7 @@ public:
 
 // Classe InterfaceGraphique mise à jour
 InterfaceGraphique::InterfaceGraphique(Grille grille)
-    : window(sf::VideoMode(grille.GetLargeur() * grille.GetTailleCellule(), grille.GetHauteur() * grille.GetTailleCellule() + 100), "Jeu de la Vie"),
+    : window(sf::VideoMode(grille.GetLargeur() * grille.GetTailleCellule(), grille.GetHauteur() * grille.GetTailleCellule()), "Jeu de la Vie"),
       main_grille(grille),
       saved_grille (grille) 
 {
