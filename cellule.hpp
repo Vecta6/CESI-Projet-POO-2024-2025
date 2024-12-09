@@ -8,6 +8,7 @@ private:
 public:
 
     Cellule();
+    ~Cellule();
     void toggle();
     void setVivante(bool v);
     bool isVivante() const;

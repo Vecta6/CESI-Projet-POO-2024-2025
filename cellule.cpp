@@ -23,3 +23,6 @@ bool Cellule::isObstacle() {
     return obstacle;
 }
 
+
+
+Cellule::~Cellule(){}

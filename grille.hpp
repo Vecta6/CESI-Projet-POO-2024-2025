@@ -15,6 +15,7 @@ private:
     int tailleCellule;
 public:
     Grille(int largeur, int hauteur, int tailleCellule);
+    ~Grille();
     
     int initialiserGrille(vector<vector<string>> table);
     vector<vector<Cellule>> GetGrille();

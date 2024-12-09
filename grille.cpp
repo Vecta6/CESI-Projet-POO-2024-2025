@@ -124,3 +124,11 @@ int Grille::GetTailleCellule()
 void Grille::reset() {
     cellules = initialstate;
 }
+
+
+
+
+
+
+
+Grille::~Grille(){}

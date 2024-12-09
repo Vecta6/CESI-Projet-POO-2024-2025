@@ -40,9 +40,7 @@ int prompt()
 int main(int argc, char *argv[], char *envp[]) {
     
     string fichier;
-    int itteration=0;
-
-
+    int itteration=5000;
 
     // recuperer les different argument
     if(argc>1)
@@ -52,7 +50,9 @@ int main(int argc, char *argv[], char *envp[]) {
             if(string(argv[i])=="-f" && argv[i+1])
             {
                 fichier=string(argv[i+1]);
-            } else if (string(argv[i])=="-i" && argv[i+1]) {
+            }
+            else if (string(argv[i])=="-i" && argv[i+1])
+            {
                 itteration=stoi(argv[i+1]);
             }
         }
