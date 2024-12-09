@@ -136,7 +136,7 @@ void Console::execute(string nom_fichier, int itteration=0)
 
 
         // si un nombre d'itteration a était entré alors faire en sorte que quand ça arrive au nombre d'itteration cible, arreter la boucle
-        if(count==itteration) {
+        if(count==itteration && itteration!=0) {
             cout << "Interuption" << endl;
             break;
         }
