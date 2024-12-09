@@ -123,11 +123,11 @@ void Console::execute(string nom_fichier, int itteration=0)
                 for(int x=0; x<main_grille.GetLargeur(); x++)
                 {
                     if(Cellules[y][x].isObstacle()) {
-                        fichier << 2;
+                        fichier << 2 << " ";
                     }else if(Cellules[y][x].isVivante()){
-                        fichier << 1;
+                        fichier << 1 << " ";
                     }else if(!Cellules[y][x].isVivante()){
-                        fichier << 0;
+                        fichier << 0 << " ";
                     }
                 }
                 fichier << endl;
