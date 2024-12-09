@@ -21,7 +21,6 @@ int gridWidth = 55;
 int gridHeight = 55;
 
 
-
 int prompt()
 {
     int reponse=0;
@@ -58,10 +57,6 @@ int main(int argc, char *argv[], char *envp[]) {
             }
         }
     }
-
-
-
-
 
 
     // Transformer le fichier selectionné en tableau
@@ -123,11 +118,8 @@ int main(int argc, char *argv[], char *envp[]) {
         size_t pos = fichier.find_last_of("/\\");
         fichier=fichier.substr(pos+1);
 
-    
-        
         console.execute(fichier, itteration);
-        
-        
+
 
     }else if(reponse==2){
 
